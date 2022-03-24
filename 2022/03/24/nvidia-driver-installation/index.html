@@ -1,0 +1,330 @@
+<!DOCTYPE html>
+<html lang=en>
+<head>
+    <!-- so meta -->
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="HandheldFriendly" content="True">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=5" />
+    <meta name="description" content="Install driver and CUDA I don’t recommend installing the NVIDIA drivers that come with CUDA as they do not contain the dkms drivers that carry over into new kernel upgrades.  The Ubuntu repositories n">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Install Nvidia Driver on Ubuntu 20.04">
+<meta property="og:url" content="http://kanzhi.tech/2022/03/24/nvidia-driver-installation/index.html">
+<meta property="og:site_name" content="Kanzhi Wu - Roboticist">
+<meta property="og:description" content="Install driver and CUDA I don’t recommend installing the NVIDIA drivers that come with CUDA as they do not contain the dkms drivers that carry over into new kernel upgrades.  The Ubuntu repositories n">
+<meta property="og:locale" content="en_US">
+<meta property="article:published_time" content="2022-03-24T06:07:54.000Z">
+<meta property="article:modified_time" content="2022-03-24T06:23:19.099Z">
+<meta property="article:author" content="Kanzhi Wu">
+<meta property="article:tag" content="Linux">
+<meta property="article:tag" content="Nvidia">
+<meta name="twitter:card" content="summary">
+    
+    
+      
+        
+          <link rel="shortcut icon" href="/images/favicon.ico">
+        
+      
+      
+        
+          <link rel="icon" type="image/png" href="/images/favicon-192x192.png" sizes="192x192">
+        
+      
+      
+        
+          <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon.png">
+        
+      
+    
+    <!-- title -->
+    <title>Install Nvidia Driver on Ubuntu 20.04</title>
+    <!-- styles -->
+    
+<link rel="stylesheet" href="/css/style.css">
+
+    <!-- persian styles -->
+    
+    <!-- rss -->
+    
+    
+	<!-- mathjax -->
+	
+<meta name="generator" content="Hexo 6.1.0"></head>
+
+<body class="max-width mx-auto px3 ltr">
+    
+      <div id="header-post">
+  <a id="menu-icon" href="#" aria-label="Menu"><i class="fas fa-bars fa-lg"></i></a>
+  <a id="menu-icon-tablet" href="#" aria-label="Menu"><i class="fas fa-bars fa-lg"></i></a>
+  <a id="top-icon-tablet" href="#" aria-label="Top" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');" style="display:none;"><i class="fas fa-chevron-up fa-lg"></i></a>
+  <span id="menu">
+    <span id="nav">
+      <ul>
+        <!--
+       --><li><a href="/">Home</a></li><!--
+     --><!--
+       --><li><a href="/about/">About</a></li><!--
+     --><!--
+       --><li><a href="/archives/">Posts</a></li><!--
+     -->
+      </ul>
+    </span>
+    <br/>
+    <span id="actions">
+      <ul>
+        
+        
+        <li><a class="icon" aria-label="Next post" href="/2022/03/24/install-nvidia-docker/"><i class="fas fa-chevron-right" aria-hidden="true" onmouseover="$('#i-next').toggle();" onmouseout="$('#i-next').toggle();"></i></a></li>
+        
+        <li><a class="icon" aria-label="Back to top" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fas fa-chevron-up" aria-hidden="true" onmouseover="$('#i-top').toggle();" onmouseout="$('#i-top').toggle();"></i></a></li>
+        <li><a class="icon" aria-label="Share post" href="#"><i class="fas fa-share-alt" aria-hidden="true" onmouseover="$('#i-share').toggle();" onmouseout="$('#i-share').toggle();" onclick="$('#share').toggle();return false;"></i></a></li>
+      </ul>
+      <span id="i-prev" class="info" style="display:none;">Previous post</span>
+      <span id="i-next" class="info" style="display:none;">Next post</span>
+      <span id="i-top" class="info" style="display:none;">Back to top</span>
+      <span id="i-share" class="info" style="display:none;">Share post</span>
+    </span>
+    <br/>
+    <div id="share" style="display: none">
+      <ul>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.facebook.com/sharer.php?u=http://kanzhi.tech/2022/03/24/nvidia-driver-installation/"><i class="fab fa-facebook " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://twitter.com/share?url=http://kanzhi.tech/2022/03/24/nvidia-driver-installation/&text=Install Nvidia Driver on Ubuntu 20.04"><i class="fab fa-twitter " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.linkedin.com/shareArticle?url=http://kanzhi.tech/2022/03/24/nvidia-driver-installation/&title=Install Nvidia Driver on Ubuntu 20.04"><i class="fab fa-linkedin " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://pinterest.com/pin/create/bookmarklet/?url=http://kanzhi.tech/2022/03/24/nvidia-driver-installation/&is_video=false&description=Install Nvidia Driver on Ubuntu 20.04"><i class="fab fa-pinterest " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=Install Nvidia Driver on Ubuntu 20.04&body=Check out this article: http://kanzhi.tech/2022/03/24/nvidia-driver-installation/"><i class="fas fa-envelope " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://getpocket.com/save?url=http://kanzhi.tech/2022/03/24/nvidia-driver-installation/&title=Install Nvidia Driver on Ubuntu 20.04"><i class="fab fa-get-pocket " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://reddit.com/submit?url=http://kanzhi.tech/2022/03/24/nvidia-driver-installation/&title=Install Nvidia Driver on Ubuntu 20.04"><i class="fab fa-reddit " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.stumbleupon.com/submit?url=http://kanzhi.tech/2022/03/24/nvidia-driver-installation/&title=Install Nvidia Driver on Ubuntu 20.04"><i class="fab fa-stumbleupon " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://digg.com/submit?url=http://kanzhi.tech/2022/03/24/nvidia-driver-installation/&title=Install Nvidia Driver on Ubuntu 20.04"><i class="fab fa-digg " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.tumblr.com/share/link?url=http://kanzhi.tech/2022/03/24/nvidia-driver-installation/&name=Install Nvidia Driver on Ubuntu 20.04&description="><i class="fab fa-tumblr " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://news.ycombinator.com/submitlink?u=http://kanzhi.tech/2022/03/24/nvidia-driver-installation/&t=Install Nvidia Driver on Ubuntu 20.04"><i class="fab fa-hacker-news " aria-hidden="true"></i></a></li>
+</ul>
+
+    </div>
+    <div id="toc">
+      <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#Install-driver-and-CUDA"><span class="toc-number">1.</span> <span class="toc-text">Install driver and CUDA</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#Install-libcudnn8"><span class="toc-number">1.0.1.</span> <span class="toc-text">Install libcudnn8</span></a></li></ol></li></ol></li></ol>
+    </div>
+  </span>
+</div>
+
+    
+    <div class="content index py4">
+        
+        <article class="post" itemscope itemtype="http://schema.org/BlogPosting">
+  <header>
+    
+    <h1 class="posttitle" itemprop="name headline">
+        Install Nvidia Driver on Ubuntu 20.04
+    </h1>
+
+
+
+    <div class="meta">
+      <span class="author" itemprop="author" itemscope itemtype="http://schema.org/Person">
+        <span itemprop="name">Kanzhi Wu</span>
+      </span>
+      
+    <div class="postdate">
+      
+        <time datetime="2022-03-24T06:07:54.000Z" itemprop="datePublished">2022-03-24</time>
+        
+      
+    </div>
+
+
+      
+
+      
+    <div class="article-tag">
+        <i class="fas fa-tag"></i>
+        <a class="tag-link-link" href="/tags/Linux/" rel="tag">Linux</a>, <a class="tag-link-link" href="/tags/Nvidia/" rel="tag">Nvidia</a>
+    </div>
+
+
+    </div>
+  </header>
+  
+
+  <div class="content" itemprop="articleBody">
+    <h1 id="Install-driver-and-CUDA"><a href="#Install-driver-and-CUDA" class="headerlink" title="Install driver and CUDA"></a>Install driver and CUDA</h1><blockquote>
+<p>I don’t recommend installing the NVIDIA drivers that come with CUDA as they do not contain the dkms drivers that carry over into new kernel upgrades.</p>
+</blockquote>
+<p>The Ubuntu repositories now contain the same drivers as the graphics-drivers PPA. So feel free to install the 495.44 drivers.</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo apt install nvidia-driver-495</span><br></pre></td></tr></table></figure>
+
+<p>Reboot the system so the new driver takes effect.</p>
+<p>Now, download the CUDA 11.5.0 .run file from NVIDIA:</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">wget https://developer.download.nvidia.com/compute/cuda/11.5.0/local_installers/cuda_11.5.0_495.29.05_linux.run</span><br></pre></td></tr></table></figure>
+
+<p>Run the .run file as sudo:</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo sh ./cuda_11.5.0_495.29.05_linux.run</span><br></pre></td></tr></table></figure>
+<p>If you get the following, just choose Continue:</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">┌──────────────────────────────────────────────────────────────────────────────┐</span><br><span class="line">│ Existing package manager installation of the driver found. It is strongly    │</span><br><span class="line">│ recommended that you remove this before continuing.                          │</span><br><span class="line">│ Abort                                                                        │</span><br><span class="line">│ Continue                                                                     │</span><br><span class="line">│                                                                             </span><br></pre></td></tr></table></figure>
+
+<p>Accept the EULA:</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line">┌──────────────────────────────────────────────────────────────────────────────┐</span><br><span class="line">│  End User License Agreement                                                  │</span><br><span class="line">│  --------------------------                                                  │</span><br><span class="line">│                                                                              │</span><br><span class="line">│  NVIDIA Software License Agreement and CUDA Supplement to                    │</span><br><span class="line">│  Software License Agreement. Last updated: October 8, 2021                   │</span><br><span class="line">│                                                                              │</span><br><span class="line">│  The CUDA Toolkit End User License Agreement applies to the                  │</span><br><span class="line">│  NVIDIA CUDA Toolkit, the NVIDIA CUDA Samples, the NVIDIA                    │</span><br><span class="line">│  Display Driver, NVIDIA Nsight tools (Visual Studio Edition),                │</span><br><span class="line">│  and the associated documentation on CUDA APIs, programming                  │</span><br><span class="line">│  model and development tools. If you <span class="keyword">do</span> not agree with the                   │</span><br><span class="line">│  terms and conditions of the license agreement, <span class="keyword">then</span> <span class="keyword">do</span> not                  │</span><br><span class="line">│  download or use the software.                                               │</span><br><span class="line">│                                                                              │</span><br><span class="line">│  Last updated: October 8, 2021.                                              │</span><br><span class="line">│                                                                              │</span><br><span class="line">│                                                                              │</span><br><span class="line">│  Preface                                                                     │</span><br><span class="line">│  -------                                                                     │</span><br><span class="line">│                                                                              │</span><br><span class="line">│──────────────────────────────────────────────────────────────────────────────│</span><br><span class="line">│ Do you accept the above EULA? (accept/decline/quit):                         │</span><br><span class="line">│ accept                                                                       |</span><br></pre></td></tr></table></figure>
+
+<p>Unselect the video driver by pressing the spacebar while [X] Driver is highlighted:</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line">┌──────────────────────────────────────────────────────────────────────────────┐</span><br><span class="line">│ CUDA Installer                                                               │</span><br><span class="line">│ - [ ] Driver                                                                 │</span><br><span class="line">│      [ ] 495.29.05                                                           │</span><br><span class="line">│ + [X] CUDA Toolkit 11.5                                                      │</span><br><span class="line">│   [X] CUDA Samples 11.5                                                      │</span><br><span class="line">│   [X] CUDA Demo Suite 11.5                                                   │</span><br><span class="line">│   [X] CUDA Documentation 11.5                                                │</span><br><span class="line">│   Options                                                                    │</span><br><span class="line">│   Install                                                                    │</span><br><span class="line">│                                                                              │</span><br><span class="line">│                                                                              │</span><br><span class="line">│                                                                              │</span><br><span class="line">│                                                                              │</span><br><span class="line">│                                                                              │</span><br><span class="line">│                                                                              │</span><br><span class="line">│                                                                              │</span><br><span class="line">│                                                                              │</span><br><span class="line">│                                                                              │</span><br><span class="line">│                                                                              │</span><br><span class="line">│                                                                              │</span><br><span class="line">│                                                                              │</span><br><span class="line">│                                                                              │</span><br><span class="line">│ Up/Down: Move | Left/Right: Expand | <span class="string">&#x27;Enter&#x27;</span>: Select | <span class="string">&#x27;A&#x27;</span>: Advanced options │</span><br></pre></td></tr></table></figure>
+
+<p>Then press the down arrow to Install. Press Enter then wait for installation to complete.</p>
+<p>After the installation is complete add the following to the bottom of your ~&#x2F;.profile or add it to the &#x2F;etc&#x2F;profile.d&#x2F;cuda.sh file which you might have to create for all users (global):</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># set PATH for cuda 11.5 installation</span></span><br><span class="line"><span class="keyword">if</span> [ -d <span class="string">&quot;/usr/local/cuda-11.5/bin/&quot;</span> ]; <span class="keyword">then</span></span><br><span class="line">    <span class="built_in">export</span> PATH=/usr/local/cuda-11.5/bin<span class="variable">$&#123;PATH:+:<span class="variable">$&#123;PATH&#125;</span>&#125;</span></span><br><span class="line">    <span class="built_in">export</span> LD_LIBRARY_PATH=/usr/local/cuda-11.5/lib64<span class="variable">$&#123;LD_LIBRARY_PATH:+:<span class="variable">$&#123;LD_LIBRARY_PATH&#125;</span>&#125;</span></span><br><span class="line"><span class="keyword">fi</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="Install-libcudnn8"><a href="#Install-libcudnn8" class="headerlink" title="Install libcudnn8"></a>Install libcudnn8</h3><p>Add the Repo:</p>
+<p>NOTE: The 20.04 repo from NVIDIA does not supply libcudnn but the 18.04 repo does and installs just fine into 20.04.</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">echo</span> <span class="string">&quot;deb http://developer.download.nvidia.com/compute/machine-learning/repos/ubuntu1804/x86_64 /&quot;</span> | sudo <span class="built_in">tee</span> /etc/apt/sources.list.d/cuda_learn.list</span><br></pre></td></tr></table></figure>
+<p>Install the key:</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo apt-key adv --fetch-keys  http://developer.download.nvidia.com/compute/cuda/repos/ubuntu1804/x86_64/7fa2af80.pub</span><br></pre></td></tr></table></figure>
+<p>Update the system:</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo apt update</span><br></pre></td></tr></table></figure>
+
+<p>Install libcudnn 8.0.4:</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo apt install libcudnn8</span><br></pre></td></tr></table></figure>
+
+<p>I recommend now to reboot the system for the changes to take effect.</p>
+<p>After it reboots check the installations using <code>nvidia-smi</code> and check CUDA install with <code>nvcc --version</code> and check libcudnn install:</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">~$ /sbin/ldconfig -N -v $(sed <span class="string">&#x27;s/:/ /&#x27;</span> &lt;&lt;&lt; <span class="variable">$LD_LIBRARY_PATH</span>) 2&gt;/dev/null | grep libcudnn</span><br><span class="line">    libcudnn_cnn_infer.so.8 -&gt; libcudnn_cnn_infer.so.8.0.4</span><br><span class="line">    libcudnn.so.8 -&gt; libcudnn.so.8.0.4</span><br><span class="line">    libcudnn_adv_train.so.8 -&gt; libcudnn_adv_train.so.8.0.4</span><br><span class="line">    libcudnn_ops_infer.so.8 -&gt; libcudnn_ops_infer.so.8.0.4</span><br><span class="line">    libcudnn_cnn_train.so.8 -&gt; libcudnn_cnn_train.so.8.0.4</span><br><span class="line">    libcudnn_adv_infer.so.8 -&gt; libcudnn_adv_infer.so.8.0.4</span><br><span class="line">    libcudnn_ops_train.so.8 -&gt; libcudnn_ops_train.so.8.0.4</span><br></pre></td></tr></table></figure>
+
+
+
+<blockquote>
+<p>Visit <a target="_blank" rel="noopener" href="https://askubuntu.com/questions/1077061/how-do-i-install-nvidia-and-cuda-drivers-into-ubuntu/1077063#1077063">https://askubuntu.com/questions/1077061/how-do-i-install-nvidia-and-cuda-drivers-into-ubuntu/1077063#1077063</a> for detailed step on installing Nvidia driver on Ubuntu 18.04</p>
+</blockquote>
+
+  </div>
+</article>
+
+
+
+        
+          <div id="footer-post-container">
+  <div id="footer-post">
+
+    <div id="nav-footer" style="display: none">
+      <ul>
+         
+          <li><a href="/">Home</a></li>
+         
+          <li><a href="/about/">About</a></li>
+         
+          <li><a href="/archives/">Posts</a></li>
+        
+      </ul>
+    </div>
+
+    <div id="toc-footer" style="display: none">
+      <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#Install-driver-and-CUDA"><span class="toc-number">1.</span> <span class="toc-text">Install driver and CUDA</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#Install-libcudnn8"><span class="toc-number">1.0.1.</span> <span class="toc-text">Install libcudnn8</span></a></li></ol></li></ol></li></ol>
+    </div>
+
+    <div id="share-footer" style="display: none">
+      <ul>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.facebook.com/sharer.php?u=http://kanzhi.tech/2022/03/24/nvidia-driver-installation/"><i class="fab fa-facebook fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://twitter.com/share?url=http://kanzhi.tech/2022/03/24/nvidia-driver-installation/&text=Install Nvidia Driver on Ubuntu 20.04"><i class="fab fa-twitter fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.linkedin.com/shareArticle?url=http://kanzhi.tech/2022/03/24/nvidia-driver-installation/&title=Install Nvidia Driver on Ubuntu 20.04"><i class="fab fa-linkedin fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://pinterest.com/pin/create/bookmarklet/?url=http://kanzhi.tech/2022/03/24/nvidia-driver-installation/&is_video=false&description=Install Nvidia Driver on Ubuntu 20.04"><i class="fab fa-pinterest fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=Install Nvidia Driver on Ubuntu 20.04&body=Check out this article: http://kanzhi.tech/2022/03/24/nvidia-driver-installation/"><i class="fas fa-envelope fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://getpocket.com/save?url=http://kanzhi.tech/2022/03/24/nvidia-driver-installation/&title=Install Nvidia Driver on Ubuntu 20.04"><i class="fab fa-get-pocket fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://reddit.com/submit?url=http://kanzhi.tech/2022/03/24/nvidia-driver-installation/&title=Install Nvidia Driver on Ubuntu 20.04"><i class="fab fa-reddit fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.stumbleupon.com/submit?url=http://kanzhi.tech/2022/03/24/nvidia-driver-installation/&title=Install Nvidia Driver on Ubuntu 20.04"><i class="fab fa-stumbleupon fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://digg.com/submit?url=http://kanzhi.tech/2022/03/24/nvidia-driver-installation/&title=Install Nvidia Driver on Ubuntu 20.04"><i class="fab fa-digg fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.tumblr.com/share/link?url=http://kanzhi.tech/2022/03/24/nvidia-driver-installation/&name=Install Nvidia Driver on Ubuntu 20.04&description="><i class="fab fa-tumblr fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://news.ycombinator.com/submitlink?u=http://kanzhi.tech/2022/03/24/nvidia-driver-installation/&t=Install Nvidia Driver on Ubuntu 20.04"><i class="fab fa-hacker-news fa-lg" aria-hidden="true"></i></a></li>
+</ul>
+
+    </div>
+
+    <div id="actions-footer">
+        <a id="menu" class="icon" href="#" onclick="$('#nav-footer').toggle();return false;"><i class="fas fa-bars fa-lg" aria-hidden="true"></i> Menu</a>
+        <a id="toc" class="icon" href="#" onclick="$('#toc-footer').toggle();return false;"><i class="fas fa-list fa-lg" aria-hidden="true"></i> TOC</a>
+        <a id="share" class="icon" href="#" onclick="$('#share-footer').toggle();return false;"><i class="fas fa-share-alt fa-lg" aria-hidden="true"></i> Share</a>
+        <a id="top" style="display:none" class="icon" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fas fa-chevron-up fa-lg" aria-hidden="true"></i> Top</a>
+    </div>
+
+  </div>
+</div>
+
+        
+        <footer id="footer">
+  <div class="footer-left">
+    Copyright &copy;
+    
+    
+    2022
+    Kanzhi Wu
+  </div>
+  <div class="footer-right">
+    <nav>
+      <ul>
+        <!--
+       --><li><a href="/">Home</a></li><!--
+     --><!--
+       --><li><a href="/about/">About</a></li><!--
+     --><!--
+       --><li><a href="/archives/">Posts</a></li><!--
+     -->
+      </ul>
+    </nav>
+  </div>
+</footer>
+
+    </div>
+    <!-- styles -->
+
+
+
+  <link rel="preload" as="style" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.2/css/all.min.css" crossorigin="anonymous" onload="this.onload=null;this.rel='stylesheet'"/>
+
+
+    <!-- jquery -->
+ 
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js" crossorigin="anonymous"></script> 
+
+
+
+
+<!-- clipboard -->
+
+  
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.7/clipboard.min.js" crossorigin="anonymous"></script> 
+  
+  <script type="text/javascript">
+  $(function() {
+    // copy-btn HTML
+    var btn = "<span class=\"btn-copy tooltipped tooltipped-sw\" aria-label=\"Copy to clipboard!\">";
+    btn += '<i class="far fa-clone"></i>';
+    btn += '</span>'; 
+    // mount it!
+    $(".highlight table").before(btn);
+    var clip = new ClipboardJS('.btn-copy', {
+      text: function(trigger) {
+        return Array.from(trigger.nextElementSibling.querySelectorAll('.code')).reduce((str,it)=>str+it.innerText+'\n','')
+      }
+    });
+    clip.on('success', function(e) {
+      e.trigger.setAttribute('aria-label', "Copied!");
+      e.clearSelection();
+    })
+  })
+  </script>
+
+
+<script src="/js/main.js"></script>
+
+<!-- search -->
+
+<!-- Google Analytics -->
+
+<!-- Baidu Analytics -->
+
+<!-- Cloudflare Analytics -->
+
+<!-- Umami Analytics -->
+
+<!-- Disqus Comments -->
+
+<!-- utterances Comments -->
+
+</body>
+</html>
